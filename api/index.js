@@ -8,11 +8,20 @@ import cookieParser from 'cookie-parser';
 import path from 'path';
 dotenv.config();
 
-mongoose.connect(process.env.MONGO).then(() => {
-    console.log('Connected to MongoDB');
-    }).catch((err) => {
-        console.log(err);
-    });
+const username = "vikas1234";
+const password = "vikas1234";
+const endpoint = "ccproject.cv84m44409nv.ap-south-1.docdb.amazonaws.com";
+const file_path = "./global-bundle.pem";
+
+const mongoUri = `mongodb://${username}:${password}@${endpoint}:27017/?tls=true&tlsCAFile=${file_path}&retryWrites=false&w=majority`;
+
+// Connect to AWS DocumentDB using Mongoose
+mongoose.connect(mongoUri, {
+}).then(() => {
+    console.log('Connected to AWS DocumentDB');
+}).catch((err) => {
+    console.error('Failed to connect to AWS DocumentDB', err);
+});
 
     const __dirname = path.resolve();
 
